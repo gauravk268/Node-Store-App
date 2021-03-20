@@ -50,7 +50,7 @@
             <label for="image"><h5>Image URL</h5></label>
             <input
               name="image"
-              type="text"
+              type="url"
               placeholder="Enter product image url"
             />
           </div>
@@ -69,8 +69,27 @@
     </div>
   </body>
   <style>
+    .form {
+      margin: 0 auto;
+    }
+
     .form-child div {
       margin: 0.5rem 0;
+    }
+
+    label {
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      line-height: 30px;
+      border: 2px solid #ccc;
+      transition: width 0.7s ease-in-out;
+    }
+
+    input:focus {
+      border: 2px solid #555;
     }
   </style>
 </html>

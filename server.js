@@ -7,6 +7,7 @@ const app = express();
 
 dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use("/", express.static(__dirname + "/public"));
 
 const connectDB = () => {
@@ -25,7 +26,7 @@ const connectDB = () => {
     console.log("[mongoose] Could not connect: ", error);
   }
 };
-connectDB();
+// connectDB();
 
 const closeDB = () => {
   mongoose.connection.close();
@@ -33,14 +34,10 @@ const closeDB = () => {
 };
 
 const productSchema = new Schema({
-  _id: { type: Number, default: new mongoose.Types.ObjectId().toHexString() },
   title: String,
   count: { type: Number, default: 1 },
   price: Number,
   category: { type: String, default: "Other" },
-  addedToCart: { type: Boolean, default: false },
-  addToCartButtonValue: { type: String, default: "Add to Cart" },
-  addToCartButtonClass: { type: String, default: "btn btn-info" },
   dateAdded: { type: Date, default: Date.now },
   image: {
     type: String,
@@ -51,7 +48,6 @@ const productSchema = new Schema({
 });
 
 app.get("/", (req, res) => {
-  // res.status(200).send("Hello World!!");
   res.sendFile(__dirname + "/views/addProduct.html");
 });
 
@@ -61,10 +57,6 @@ app.get("/:word/echo", (req, res) => {
 
 app.get("/name", (req, res) => {
   res.json({ name: req.query.first + " " + req.query.last });
-});
-
-app.get("/addProduct", (req, res) => {
-  res.sendFile(__dirname + "/views/addProduct.html");
 });
 
 app.post("/addProduct", (req, res) => {
@@ -80,23 +72,22 @@ app.post("/addProduct", (req, res) => {
       description: productAdd.description,
     });
 
-    newProduct.save(function (err, data) {
-      if (err) return console.error(err);
-      else return data;
+    newProduct.save(function (err, savedProduct) {
+      if (err) {
+        console.log("Could not save Product: " + err);
+        res.send("<h2>Could not save your product. Please try again.</h2>");
+      } else {
+        // console.log(savedProduct);
+        console.log("[mongoose] New Product added successfully.");
+      }
     });
   };
 
   createAndSaveProduct();
-
-  res.status(200).json(productAdd);
+  res.status(200).send("<h1>Product Saved.</h1>");
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  if (process.env.PORT) {
-    console.log(
-      "Server up and running. Listening on port: " + process.env.PORT
-    );
-  } else {
-    console.log("Server up and running. Listening on port: " + "3000");
-  }
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server up and running on port: ", PORT);
 });
