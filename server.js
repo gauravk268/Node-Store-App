@@ -108,8 +108,8 @@ app.post("/addProduct", (req, res) => {
   };
 
   createAndSaveProduct();
-  // res.status(200).send("<h1>Product Saved.</h1>");
-  res.status(200).json(productAdd);
+  res.status(200).send("<h1>Product Saved.</h1>");
+  // res.status(200).json(productAdd);
 });
 
 const PORT = process.env.PORT || 3000;
