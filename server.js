@@ -26,6 +26,7 @@ const connectDB = () => {
     console.log("[mongoose] Could not connect: ", error);
   }
 };
+
 connectDB();
 
 const closeDB = () => {
@@ -59,9 +60,31 @@ app.get("/name", (req, res) => {
   res.json({ name: req.query.first + " " + req.query.last });
 });
 
+app.get("/products", (req, res) => {
+  const Product = mongoose.model("Product", productSchema);
+
+  Product.find({}, function (err, products) {
+    if (err) {
+      console.log("[mongodb] Error occured: ", err);
+      return handleError(err);
+    }
+    res.status(200).send(products);
+  });
+});
+
 app.post("/addProduct", (req, res) => {
   const productAdd = req.body;
-  var Product = mongoose.model("Product", productSchema);
+
+  const Product = mongoose.model("Product", productSchema);
+
+  if (productAdd.image === "") {
+    productAdd.image =
+      "https://cdn.iconscout.com/icon/free/png-512/product-135-781070.png";
+  }
+
+  if (productAdd.description === "") {
+    productAdd.description = "More details will be updated soon.";
+  }
 
   var createAndSaveProduct = () => {
     var newProduct = new Product({
@@ -77,14 +100,14 @@ app.post("/addProduct", (req, res) => {
         console.log("Could not save Product: " + err);
         res.send("<h2>Could not save your product. Please try again.</h2>");
       } else {
-        // console.log(savedProduct);
         console.log("[mongoose] New Product added successfully.");
       }
     });
   };
 
   createAndSaveProduct();
-  res.status(200).send("<h1>Product Saved.</h1>");
+  // res.status(200).send("<h1>Product Saved.</h1>");
+  res.status(200).json(productAdd);
 });
 
 const PORT = process.env.PORT || 3000;
