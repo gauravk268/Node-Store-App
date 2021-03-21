@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const { Schema } = mongoose;
 const dotenv = require("dotenv");
 const app = express();
@@ -9,6 +10,7 @@ dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use("/", express.static(__dirname + "/public"));
+app.use(cors());
 
 const connectDB = () => {
   const uri = process.env.MONGO_URI;
