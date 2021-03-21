@@ -26,7 +26,7 @@ const connectDB = () => {
     console.log("[mongoose] Could not connect: ", error);
   }
 };
-// connectDB();
+connectDB();
 
 const closeDB = () => {
   mongoose.connection.close();
@@ -63,7 +63,7 @@ app.post("/addProduct", (req, res) => {
   const productAdd = req.body;
   var Product = mongoose.model("Product", productSchema);
 
-  var createAndSaveProduct = function () {
+  var createAndSaveProduct = () => {
     var newProduct = new Product({
       title: productAdd.title,
       price: productAdd.price,
@@ -72,7 +72,7 @@ app.post("/addProduct", (req, res) => {
       description: productAdd.description,
     });
 
-    newProduct.save(function (err, savedProduct) {
+    newProduct.save((err, savedProduct) => {
       if (err) {
         console.log("Could not save Product: " + err);
         res.send("<h2>Could not save your product. Please try again.</h2>");
