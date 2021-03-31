@@ -7,7 +7,7 @@
 ## Functionalities:
 
 - Add new product to the store
-- Have default values for image and  description
+- Have default values for image and description if leaved blank
 - Fetch all products from the store
 
 ## Installation and Setup Instructions
