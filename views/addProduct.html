@@ -13,83 +13,96 @@
     <script src="/bootstrap-4.5.3-dist/js/bootstrap.min.js" async></script>
   </head>
   <body>
-    <div class="container">
-      <div class="jumbotron form">
-        <h1 class="form-child form-head">Add new Product to Store</h1>
-        <form class="form-child form-body" method="post" action="/addProduct">
+    <div id="root">
+      <div
+        class="d-flex align-items-center justify-content-center container"
+        style="min-height: 100vh"
+      >
+        <div class="w-100" style="max-width: 500px">
           <div>
-            <label for="title"><h5>Title</h5></label>
-            <input
-              name="title"
-              type="text"
-              placeholder="Enter product Name"
-              required
-            />
-          </div>
+            <div class="card">
+              <div class="card-body">
+                <h2 class="text-center mb-4">Add new product to store</h2>
+                <form class="">
+                  <div id="title" class="form-group">
+                    <label class="form-label"
+                      >Title<span class="text-danger"> *</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter product name"
+                      required
+                    />
+                  </div>
 
-          <div>
-            <label for="category"><h5>Category</h5></label>
-            <input
-              name="category"
-              type="text"
-              placeholder="Enter product category"
-            />
-          </div>
+                  <div id="category" class="form-group">
+                    <label class="form-label"
+                      >Category<span class="text-danger"> *</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter product category"
+                      required
+                    />
+                  </div>
 
-          <div>
-            <label for="price"><h5>Price</h5></label>
-            <input
-              name="price"
-              type="text"
-              placeholder="Enter product price"
-              required
-            />
-          </div>
+                  <div id="price" class="form-group">
+                    <label class="form-label"
+                      >Price<span class="text-danger"> *</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter product price"
+                      required
+                    />
+                  </div>
 
-          <div>
-            <label for="image"><h5>Image URL</h5></label>
-            <input
-              name="image"
-              type="url"
-              placeholder="Enter product image url"
-            />
-          </div>
+                  <div id="image" class="form-group">
+                    <label class="form-label">Image</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter product image url"
+                    />
+                  </div>
 
-          <div>
-            <label for="description"><h5>Description</h5></label>
-            <input
-              name="description"
-              type="text"
-              placeholder="Enter product description"
-            />
+                  <div id="description" class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      placeholder="enter product description"
+                      style="min-height: 15vh"
+                    ></textarea>
+                  </div>
+
+                  <button type="submit" class="w-100 btn btn-primary">
+                    Add Product
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
-          <button class="btn btn-primary" type="submit">Add Product</button>
-        </form>
+        </div>
       </div>
     </div>
   </body>
   <style>
-    .form {
-      margin: 0 auto;
-    }
-
-    .form-child div {
-      margin: 0.5rem 0;
-    }
-
-    label {
-      display: block;
-    }
-
-    input {
-      width: 100%;
-      line-height: 30px;
-      border: 2px solid #ccc;
-      transition: width 0.7s ease-in-out;
-    }
-
-    input:focus {
-      border: 2px solid #555;
+    body {
+      background: #ad5389; /* fallback for old browsers */
+      background: -webkit-linear-gradient(
+        to right,
+        #3c1053,
+        #ad5389
+      ); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(
+        to right,
+        #3c1053,
+        #ad5389
+      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
   </style>
 </html>
