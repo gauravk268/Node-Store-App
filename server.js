@@ -27,7 +27,7 @@ const connectDB = () => {
   }
 };
 
-// connectDB();
+connectDB();
 
 const closeDB = () => {
   mongoose.connection.close();
@@ -73,20 +73,21 @@ app.get("/products", (req, res) => {
 });
 
 app.post("/addProduct", (req, res) => {
-  // const privateKey = "20185005";
-  // if (req.body.key !== privateKey) {
-  //   console.log(
-  //     "Private Key do not matched, cannot save product. ",
-  //     req.body.key
-  //   );
-  //   res.send(
-  //     "<h1>Private Key do not matched, cannot save product. Please try again with correct key</h1>"
-  //   );
-  //   return;
-  // }
+  const privateKey = "20185005";
+  if (req.body.key !== privateKey) {
+    console.log(
+      "Private Key do not matched, cannot save product. ",
+      req.body.key
+    );
+    res
+      .status(400)
+      .send(
+        "<h1>Private Key do not matched, cannot save product. Please try again with correct key</h1>"
+      );
+    return;
+  }
 
   const productAdd = req.body;
-  console.log("request ", productAdd);
 
   const Product = mongoose.model("Product", productSchema);
 
@@ -99,9 +100,7 @@ app.post("/addProduct", (req, res) => {
     productAdd.description = "More details will be updated soon.";
   }
 
-  res.status(200).send();
-
-  var createAndSaveProduct = () => {
+  const createAndSaveProduct = () => {
     var newProduct = new Product({
       title: productAdd.title,
       price: productAdd.price,
@@ -110,23 +109,32 @@ app.post("/addProduct", (req, res) => {
       description: productAdd.description,
     });
 
-    console.log("newProduct: ", newProduct);
+    // console.log(newProduct);
 
-    // newProduct.save((err, savedProduct) => {
-    //   if (err) {
-    //     console.log("Could not save Product: " + err);
-    //     res.send("<h2>Could not save your product. Please try again.</h2>");
-    //   } else {
-    //     console.log("[mongoose] New Product added successfully.");
-    //   }
-    // });
+    newProduct.save((err, savedProduct) => {
+      if (err) {
+        console.log("Could not save Product: " + err);
+        res
+          .status(500)
+          .send("<h2>Could not save your product. Please try again.</h2>");
+      } else {
+        console.log("[mongoose] New Product added successfully.");
+        res.status(200).send("<h1>Product added successfully. </h1>");
+      }
+    });
   };
+
+  createAndSaveProduct();
 });
 
-app.post("/feedback", (req, res) => {
-  console.log("req: ", req.body);
-  res.status(200).send();
-});
+// app.get("/feedback", (req, res) => {
+//   res.status(200).sendFile(__dirname + "/views/feedback.html");
+// });
+
+// app.post("/feedback", (req, res) => {
+//   console.log("req: ", req.body);
+//   res.status(200).send(req.body);
+// });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
