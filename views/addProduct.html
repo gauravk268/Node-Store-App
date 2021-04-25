@@ -23,12 +23,26 @@
             <div class="card">
               <div class="card-body">
                 <h2 class="text-center mb-4">Add new product to store</h2>
-                <form class="">
+                <form method="POST" action="/addProduct">
+                  <div id="key" class="form-group">
+                    <label class="form-label" for="key"
+                      >User Key<span class="text-danger"> *</span></label
+                    >
+                    <input
+                      name="key"
+                      type="text"
+                      class="form-control"
+                      placeholder="enter your unique key"
+                      required
+                    />
+                  </div>
+
                   <div id="title" class="form-group">
-                    <label class="form-label"
+                    <label class="form-label" for="title"
                       >Title<span class="text-danger"> *</span></label
                     >
                     <input
+                      name="title"
                       type="text"
                       class="form-control"
                       placeholder="enter product name"
@@ -37,10 +51,11 @@
                   </div>
 
                   <div id="category" class="form-group">
-                    <label class="form-label"
+                    <label class="form-label" for="category"
                       >Category<span class="text-danger"> *</span></label
                     >
                     <input
+                      name="category"
                       type="text"
                       class="form-control"
                       placeholder="enter product category"
@@ -49,10 +64,11 @@
                   </div>
 
                   <div id="price" class="form-group">
-                    <label class="form-label"
+                    <label class="form-label" for="price"
                       >Price<span class="text-danger"> *</span></label
                     >
                     <input
+                      name="price"
                       type="text"
                       class="form-control"
                       placeholder="enter product price"
@@ -61,8 +77,9 @@
                   </div>
 
                   <div id="image" class="form-group">
-                    <label class="form-label">Image</label>
+                    <label class="form-label" for="image">Image</label>
                     <input
+                      name="image"
                       type="text"
                       class="form-control"
                       placeholder="enter product image url"
@@ -70,8 +87,11 @@
                   </div>
 
                   <div id="description" class="form-group">
-                    <label class="form-label">Description</label>
+                    <label class="form-label" for="description"
+                      >Description</label
+                    >
                     <textarea
+                      name="description"
                       type="text"
                       class="form-control"
                       placeholder="enter product description"

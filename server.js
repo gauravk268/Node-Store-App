@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const { Schema } = mongoose;
@@ -7,8 +6,7 @@ const dotenv = require("dotenv");
 const app = express();
 
 dotenv.config();
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/", express.static(__dirname + "/public"));
 app.use(cors());
 
@@ -29,7 +27,7 @@ const connectDB = () => {
   }
 };
 
-connectDB();
+// connectDB();
 
 const closeDB = () => {
   mongoose.connection.close();
@@ -75,7 +73,20 @@ app.get("/products", (req, res) => {
 });
 
 app.post("/addProduct", (req, res) => {
+  // const privateKey = "20185005";
+  // if (req.body.key !== privateKey) {
+  //   console.log(
+  //     "Private Key do not matched, cannot save product. ",
+  //     req.body.key
+  //   );
+  //   res.send(
+  //     "<h1>Private Key do not matched, cannot save product. Please try again with correct key</h1>"
+  //   );
+  //   return;
+  // }
+
   const productAdd = req.body;
+  console.log("request ", productAdd);
 
   const Product = mongoose.model("Product", productSchema);
 
@@ -88,6 +99,8 @@ app.post("/addProduct", (req, res) => {
     productAdd.description = "More details will be updated soon.";
   }
 
+  res.status(200).send();
+
   var createAndSaveProduct = () => {
     var newProduct = new Product({
       title: productAdd.title,
@@ -97,19 +110,22 @@ app.post("/addProduct", (req, res) => {
       description: productAdd.description,
     });
 
-    newProduct.save((err, savedProduct) => {
-      if (err) {
-        console.log("Could not save Product: " + err);
-        res.send("<h2>Could not save your product. Please try again.</h2>");
-      } else {
-        console.log("[mongoose] New Product added successfully.");
-      }
-    });
-  };
+    console.log("newProduct: ", newProduct);
 
-  createAndSaveProduct();
-  res.status(200).send("<h1>Product Saved.</h1>");
-  // res.status(200).json(productAdd);
+    // newProduct.save((err, savedProduct) => {
+    //   if (err) {
+    //     console.log("Could not save Product: " + err);
+    //     res.send("<h2>Could not save your product. Please try again.</h2>");
+    //   } else {
+    //     console.log("[mongoose] New Product added successfully.");
+    //   }
+    // });
+  };
+});
+
+app.post("/feedback", (req, res) => {
+  console.log("req: ", req.body);
+  res.status(200).send();
 });
 
 const PORT = process.env.PORT || 3000;
